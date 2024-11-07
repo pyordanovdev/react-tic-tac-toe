@@ -1,0 +1,98 @@
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #f97316;
+  --tertiary-color: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.tic-tac-toe-app {
+  background: url('./assets/tic-tac-toe.jpg') no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 50px;
+}
+header,
+.dashboard {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+form.add-players {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+form.add-players input {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+button.button {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0s;
+}
+button.button:hover {
+  background-color: var(--secondary-color);
+}
+h1 {
+  font-size: 36px;
+  margin: 0px;
+}
+.game-matrix {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  margin-top: 20px;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  padding: 5px;
+}
+.cell__game-matrix {
+  background-color: var(--tertiary-color);
+  border-radius: 5px;
+  height: 130px;
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  cursor: pointer;
+}
+.cell__game-matrix:hover {
+  background-color: var(--secondary-color);
+  color: #fff;
+}
+
+.dashboard {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #000;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #fff;
+}
