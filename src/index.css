@@ -68,6 +68,7 @@ h1 {
   background-color: var(--primary-color);
   border-radius: 5px;
   padding: 5px;
+  position: relative;
 }
 .cell__game-matrix {
   background-color: var(--tertiary-color);
@@ -95,4 +96,46 @@ h1 {
   align-items: center;
   text-align: center;
   background-color: #fff;
+}
+
+.winner__dashboard {
+  background-color: green;
+  font-weight: 700;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 50px;
+  margin-top: 10px;
+  font-size: 18px;
+}
+.draw__dashboard {
+  background-color: orange;
+  font-weight: 700;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 50px;
+  margin-top: 10px;
+  font-size: 18px;
+}
+.scores__dashboard {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  width: 100%;
+  gap: 25%;
+}
+.restart-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(1px);
+  border-radius: 5px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }

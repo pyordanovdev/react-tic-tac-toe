@@ -1,17 +1,26 @@
 import { useState } from 'react';
 import checkIfCellIsEmpty from '../Utils/checkIfCellIsEmpty';
 import checkIfCurrentPlayerIsWinner from '../Utils/checkIfCurrentPlayerIsWinner';
+import checkIfGameHasEndedWithNoWinner from '../Utils/checkIfGameHasEndedWithNoWinner';
+import Button from './Button';
 function GameBoard({
   setCurrentPlayerPlaying,
   currentPlayerPlaying,
   player1Name,
   player2Name,
+  setWinner,
+  setScores,
+  gameShouldRestart,
+  setGameShouldRestart,
+  setIsDraw,
 }) {
   // Set states
   const [progressMatrix, setProgressMatrix] = useState(
     Array.from({ length: 3 }, () => Array.from({ length: 3 }, () => ''))
   );
-  const [currentSymbol, setCurrentSymbol] = useState('X');
+  const [currentSymbol, setCurrentSymbol] = useState(
+    currentPlayerPlaying === player1Name ? 'X' : 'O'
+  );
   function handleCellClick(rowIndex, colIndex) {
     console.log(rowIndex, colIndex);
 
@@ -21,36 +30,61 @@ function GameBoard({
       return alert('Cell is not empty.');
     }
 
-    // Update matrix
-    const updatedMatrix = [...progressMatrix];
+    // Copy and update matrix
+    const updatedMatrix = JSON.parse(JSON.stringify(progressMatrix));
     updatedMatrix[rowIndex][colIndex] = currentSymbol;
-    console.log(
-      checkIfCurrentPlayerIsWinner(
-        updatedMatrix,
-        rowIndex,
-        colIndex,
-        currentSymbol
-      )
+    setProgressMatrix(updatedMatrix);
+
+    // Check if current player is winner
+    const resultIsWinner = checkIfCurrentPlayerIsWinner(
+      updatedMatrix,
+      rowIndex,
+      colIndex,
+      currentSymbol
     );
 
-    // Switch current player && current symbol
-
-    if (currentPlayerPlaying === player1Name) {
-      setCurrentPlayerPlaying(player2Name);
-      setCurrentSymbol('O');
+    if (resultIsWinner !== null) {
+      setWinner(currentPlayerPlaying);
+      setScores((prev) => {
+        return {
+          ...prev,
+          [currentPlayerPlaying]: prev[currentPlayerPlaying] + 1,
+        };
+      });
+      setGameShouldRestart(true);
+    } else if (checkIfGameHasEndedWithNoWinner(updatedMatrix)) {
+      console.log('no winner');
+      setIsDraw(true);
+      setGameShouldRestart(true);
     } else {
-      setCurrentPlayerPlaying(player1Name);
-      setCurrentSymbol('X');
+      // Switch current player && current symbol
+      if (currentPlayerPlaying === player1Name) {
+        setCurrentPlayerPlaying(player2Name);
+        setCurrentSymbol('O');
+      } else {
+        setCurrentPlayerPlaying(player1Name);
+        setCurrentSymbol('X');
+      }
     }
+  }
 
-    // On click I have to check:
-    // 1. Is the cell empty? ✅
-    // 2. Is the game over?
-    // 2.1. There's a winner
-    // 2.2. It's a draw - meaning no winner and no empty cells left
+  function restartGame() {
+    setProgressMatrix(
+      Array.from({ length: 3 }, () => Array.from({ length: 3 }, () => ''))
+    );
+    setWinner(null);
+    setCurrentPlayerPlaying(player1Name);
+    setCurrentSymbol('X');
+    setGameShouldRestart(false);
+    setIsDraw(false);
   }
   return (
     <div className="game-matrix">
+      {gameShouldRestart && (
+        <div className="restart-overlay">
+          <Button onClickHandler={restartGame}>Restart</Button>
+        </div>
+      )}
       {progressMatrix.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <div

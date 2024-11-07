@@ -8,6 +8,10 @@ function App() {
   const [player2Name, setPlayer2Name] = useState('');
   const [showGame, setShowGame] = useState(false);
   const [currentPlayerPlaying, setCurrentPlayerPlaying] = useState('');
+  const [winner, setWinner] = useState(null);
+  const [isDraw, setIsDraw] = useState(false);
+  const [scores, setScores] = useState({});
+  const [gameShouldRestart, setGameShouldRestart] = useState(false);
 
   return (
     <div className="tic-tac-toe-app">
@@ -22,6 +26,7 @@ function App() {
           setPlayer2Name={setPlayer2Name}
           setShowGame={setShowGame}
           setCurrentPlayerPlaying={setCurrentPlayerPlaying}
+          setScores={setScores}
         />
       )}
       {showGame && (
@@ -29,6 +34,9 @@ function App() {
           player1Name={player1Name}
           player2Name={player2Name}
           currentPlayerPlaying={currentPlayerPlaying}
+          winner={winner}
+          scores={scores}
+          isDraw={isDraw}
         />
       )}
       {showGame && (
@@ -37,6 +45,11 @@ function App() {
           player1Name={player1Name}
           player2Name={player2Name}
           currentPlayerPlaying={currentPlayerPlaying}
+          setWinner={setWinner}
+          setScores={setScores}
+          gameShouldRestart={gameShouldRestart}
+          setGameShouldRestart={setGameShouldRestart}
+          setIsDraw={setIsDraw}
         />
       )}
     </div>

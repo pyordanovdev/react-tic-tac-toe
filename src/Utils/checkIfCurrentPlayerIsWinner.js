@@ -4,25 +4,24 @@ export default function checkIfCurrentPlayerIsWinner(
   colIndex,
   currentSymbol
 ) {
-  // Check if player has 3 in a row
+  // 1) Check if player has 3 in a row
   if (matrix[rowIndex].every((cell) => cell === currentSymbol))
-    return 'win by row';
-
-  // Check if player has 3 in a column
-  if (matrix.every((row) => row[colIndex] === currentSymbol))
-    return 'win by column';
-
-  // Check if player has 3 in a diagonal
-  if (
+    return { winBy: 'row', rowIndex, colIndex };
+  // 2) Check if player has 3 in a column
+  else if (matrix.every((row) => row[colIndex] === currentSymbol))
+    return { winBy: 'column', rowIndex, colIndex };
+  // 3) Check if player has 3 in a diagonal
+  else if (
     matrix[0][0] === currentSymbol &&
     matrix[1][1] === currentSymbol &&
     matrix[2][2] === currentSymbol
   )
-    return 'win by diagonal';
-  if (
+    return { winBy: 'diagonal', direction: 'forward', rowIndex, colIndex };
+  else if (
     matrix[0][2] === currentSymbol &&
     matrix[1][1] === currentSymbol &&
     matrix[2][0] === currentSymbol
   )
-    return 'win by diagonal';
+    return { winBy: 'diagonal', direction: 'reverse', rowIndex, colIndex };
+  else return null;
 }
